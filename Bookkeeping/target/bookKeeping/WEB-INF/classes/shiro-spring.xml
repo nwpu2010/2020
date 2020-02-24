@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--凭证匹配器-->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        
+            <property name="hashIterations" value="2"></property>
+            <property name="hashAlgorithmName" value="md5"></property>
+    </bean>
+<!--声明realm-->
+    <bean  id="userRealm" class="com.lee.realms.UserRealm">
+            <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+    </bean>
+
+    <!--安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+            <property name="realm" ref="userRealm"></property>
+    </bean>
+
+    <!--shiro过滤器-->
+    <bean id="shiroFilter"
+          class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager" />
+        <property name="loginUrl" value="/index.jsp" />
+        <property name="unauthorizedUrl" value="/unauthorized.jsp" />
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp*=anon
+                /login*=anon
+                /login/toLogin*=anon
+                /login/login*=anon
+                /login/logout = logout
+                <!-- /** = anon所有url都可以匿名访问 -->
+                <!-- /** = authc所有url都不可以匿名访问 必须放到最后面 -->
+                <!-- /*/* = authc -->
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+</beans>

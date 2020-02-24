@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisCodeHelperDatasource">
+    <option name="projectProfile">
+      <ProjectProfile>
+        <option name="generateService" value="true" />
+        <option name="generateServiceInterface" value="true" />
+        <option name="javaMapperPackage" value="com.lee.bussi.mapper" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/src" />
+        <option name="javaModelPackage" value="com.lee.bussi.pojo" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/src" />
+        <option name="lastDatabaseCrudChooseModuleName" value="car" />
+        <option name="mapperSuperClass" value="com.lee.common.base.mapper.BaseMapper" />
+        <option name="moduleNameToPackageAndPathMap">
+          <map>
+            <entry key="car">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.lee.bussi.mapper" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/src" />
+                  <option name="javaModelPacakge" value="com.lee.bussi.pojo" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/src" />
+                  <option name="javaServiceInterfacePackage" value="com.lee.bussi.service" />
+                  <option name="javaServiceInterfacePath" value="D:\IDEA\car\src" />
+                  <option name="javaServicePackage" value="com.lee.bussi.service.impl" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/src" />
+                  <option name="xmlPackage" value="mapper.bussi" />
+                  <option name="xmlPath" value="D:\IDEA\car\src\resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="tableGenerateConfigs">
+          <map>
+            <entry key="car:bus_cars">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="BusCars" />
+                  <option name="moduleName" value="car" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="car:bussi_customer">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="BussiCustomer" />
+                  <option name="moduleName" value="car" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="car:sys_menu">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="SysMenu" />
+                  <option name="moduleName" value="car" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="car:sys_users">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="id" />
+                  <option name="javaModelName" value="SysUsers" />
+                  <option name="moduleName" value="car" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="xmlMapperPackage" value="mapper.bussi" />
+        <option name="xmlMapperPath" value="D:\IDEA\car\src\resources" />
+      </ProjectProfile>
+    </option>
+  </component>
+</project>

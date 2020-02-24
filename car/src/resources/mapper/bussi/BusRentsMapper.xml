@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.bussi.mapper.BusRentsMapper">
+  <resultMap id="BaseResultMap" type="com.lee.bussi.vo.BusRentsVO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rent_no" jdbcType="VARCHAR" property="rentNo" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="begin_time" jdbcType="VARCHAR" property="beginTime" />
+    <result column="return_time" jdbcType="VARCHAR" property="returnTime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="car_num" jdbcType="VARCHAR" property="carNum" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, rent_no, price, begin_time, return_time, flag, id_card, car_num, user_id, create_time
+  </sql>
+  <select id="selectOne" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_rents
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" parameterType="com.lee.bussi.query.BusRentsQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_rents
+    <where>
+        <if test="carNum != null and carNum !=''">
+            and car_num = #{carNum}
+        </if>
+        <if test="idCard != null and idCard !=''">
+          and id_card = #{idCard}
+        </if>
+        <if test="rentNo != null and rentNo !=''">
+          and rent_no = #{rentNo}
+        </if>
+        <if test="minRentTime != null and minRentTime !=''">
+          and begin_time >= #{minRentTime}
+        </if>
+        <if test="maxRentTime != null and maxRentTime !=''">
+          and #{maxRentTime} >= return_time
+        </if>
+      <if test="flag != null and flag !=''">
+        and #{flag} = flag
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from bus_rents
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lee.bussi.form.BusRentsForm" useGeneratedKeys="true">
+    insert into bus_rents (rent_no, price, begin_time,
+      return_time, flag, id_card, 
+      car_num, user_id, create_time
+      )
+    values (#{rentNo,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{beginTime,jdbcType=VARCHAR}, 
+      #{returnTime,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, 
+      #{carNum,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="update" parameterType="com.lee.bussi.form.BusRentsForm">
+    update bus_rents
+    set rent_no = #{rentNo,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      begin_time = #{beginTime,jdbcType=VARCHAR},
+      return_time = #{returnTime,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      car_num = #{carNum,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 修改出租单记录 -->
+  <update id="updateFlag" >
+    update bus_rents
+    set
+        flag = #{flag,jdbcType=INTEGER}
+
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,90 @@
+{
+	"contentManagement": [
+		{
+			"title": "租赁管理",
+			"icon": "icon-text",
+			"href": "",
+			"spread": true,
+			"children": [
+				{
+					"title": "客户管理",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "车辆管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_self"
+				},
+				{
+					"title": "出租管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_self"
+				},
+				{
+					"title": "还车管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_self"
+				}
+			]
+		},
+		{
+			"title": "系统管理",
+			"icon": "&#xe634;",
+			"href": "page/img/images.html",
+			"spread": false,
+			"children": [
+				{
+					"title": "账户管理",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "菜单管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_self"
+				},
+				{
+					"title": "角色管理",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_self"
+				}
+			]
+		},
+		{
+			"title": "统计分析",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "xxxx",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "xxxxx",
+					"icon": "&#xe609;",
+					"href": "page/login/login.html",
+					"spread": false,
+					"target": "_blank"
+				}
+			]
+		}
+	]
+}
+
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.sys.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.lee.sys.form.SysMenuForm">
+
+    <id column="id"  property="id" />
+    <result column="parent_id"  property="parentId" />
+    <result column="title"  property="title" />
+    <result column="icon"  property="icon" />
+    <result column="href"  property="href" />
+    <result column="spread"  property="spread" />
+    <result column="target"  property="target" />
+    <result column="sort"  property="sort" />
+  </resultMap>
+
+
+  <resultMap id="BaseResultMap_VO" type="com.lee.sys.vo.SysMenuVO">
+
+    <id column="id"  property="id" />
+    <result column="parent_id"  property="parentId" />
+    <result column="title"  property="title" />
+    <result column="icon"  property="icon" />
+    <result column="href"  property="href" />
+    <result column="spread"  property="spread" />
+    <result column="target"  property="target" />
+    <result column="sort"  property="sort" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, parent_id, title, icon, href, spread, target, sort
+  </sql>
+  <select id="selectOne" parameterType="java.lang.Integer" resultMap="BaseResultMap_VO">
+
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+
+    delete from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lee.sys.form.SysMenuForm">
+
+    insert into sys_menu (id, parent_id, title, 
+      icon, href, spread, 
+      target, sort)
+    values (#{id}, #{parentId}, #{title},
+      #{icon}, #{href}, #{spread},
+      #{target}, #{sort})
+  </insert>
+
+  <select id="selectList"  resultMap="BaseResultMap_VO">
+    select
+        <include refid="Base_Column_List"></include>
+    from sys_menu  order by sort desc
+  </select>
+  <update id="update" parameterType="com.lee.sys.pojo.SysMenu">
+    update sys_menu
+    set parent_id = #{parentId},
+      title = #{title},
+      icon = #{icon},
+      href = #{href},
+      spread = #{spread},
+      target = #{target},
+      sort = #{sort},
+    where id = #{id}
+  </update>
+</mapper>

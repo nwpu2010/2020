@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.bussi.mapper.BusCarsMapper">
+  <resultMap id="BaseResultMap" type="com.lee.bussi.pojo.BusCars">
+    <!--@mbg.generated-->
+    <!--@Table bus_cars-->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="car_num" jdbcType="VARCHAR" property="carNum" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="rent_price" jdbcType="INTEGER" property="rentPrice" />
+    <result column="deposit" jdbcType="INTEGER" property="deposit" />
+    <result column="is_rent" jdbcType="INTEGER" property="isRent" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, car_num, `type`, color, price, rent_price, deposit, is_rent, `desc`, img, version
+  </sql>
+
+  <insert id="insert" parameterType="com.lee.bussi.pojo.BusCars">
+    <!--@mbg.generated-->
+    insert into bus_cars (id, car_num, `type`, 
+      color, price, rent_price, 
+      deposit, is_rent, `desc`, 
+      img, version)
+    values (#{id,jdbcType=INTEGER}, #{carNum,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{color,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{rentPrice,jdbcType=INTEGER}, 
+      #{deposit,jdbcType=INTEGER}, #{isRent,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lee.bussi.pojo.BusCars">
+    <!--@mbg.generated-->
+    insert into bus_cars
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carNum != null">
+        car_num,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="rentPrice != null">
+        rent_price,
+      </if>
+      <if test="deposit != null">
+        deposit,
+      </if>
+      <if test="isRent != null">
+        is_rent,
+      </if>
+      <if test="desc != null">
+        `desc`,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carNum != null">
+        #{carNum,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="rentPrice != null">
+        #{rentPrice,jdbcType=INTEGER},
+      </if>
+      <if test="deposit != null">
+        #{deposit,jdbcType=INTEGER},
+      </if>
+      <if test="isRent != null">
+        #{isRent,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectList" parameterType="com.lee.bussi.query.BusCarsQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from bus_cars
+    <where>
+      <if test="carNum != null and carNum !=''">
+        and car_num = #{carNum}
+      </if>
+      <if test="type != null and type !=''">
+        and type = #{type}
+      </if>
+      <if test="color != null and color !=''">
+        and color like concat('%',#{color},'%')
+      </if>
+      <if test="isRent != null and isRent !=''">
+        and is_rent = #{isRent}
+      </if>
+      <if test="minRentPrice != null and minRentPrice !=''">
+        and rent_price  >= #{minRentPrice}
+      </if>
+      <if test="maxRentPrice != null and maxRentPrice !=''">
+        and #{maxRentPrice}  >= rent_price
+      </if>
+    </where>
+  </select>
+
+  <update id="updateFlag" >
+    update bus_cars
+    set  is_rent = #{carFlag,jdbcType=INTEGER},
+    version = version + 1
+    where id = #{id,jdbcType=INTEGER} and version = #{version}
+  </update>
+</mapper>

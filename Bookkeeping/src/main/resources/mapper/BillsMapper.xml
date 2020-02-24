@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.mapper.BillsMapper">
+  <resultMap id="BaseResultMap" type="com.lee.domain.Bills">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="titile" jdbcType="VARCHAR" property="titile" />
+    <result column="billtime" jdbcType="TIMESTAMP" property="billtime" />
+    <result column="typeid" jdbcType="INTEGER" property="typeid" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    
+  </resultMap>
+  <resultMap id="HasNameResultMap" extends="BaseResultMap" type="com.lee.PO.BillsPO">
+    <result column="name" jdbcType="VARCHAR" property="name"></result>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, titile, billtime, typeid, price, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from bills
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.lee.domain.Bills" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into bills (titile, billtime, typeid, 
+      price, remark)
+    values (#{titile,jdbcType=VARCHAR}, #{billtime,jdbcType=TIMESTAMP}, #{typeid,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.lee.domain.Bills" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into bills
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="titile != null">
+        titile,
+      </if>
+      <if test="billtime != null">
+        billtime,
+      </if>
+      <if test="typeid != null">
+        typeid,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="titile != null">
+        #{titile,jdbcType=VARCHAR},
+      </if>
+      <if test="billtime != null">
+        #{billtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="selectBillsListAndName" resultMap="HasNameResultMap">
+
+    SELECT t1.*,t2.name from  bills t1,bill_type t2
+    <where>
+        and t1.typeid = t2.id
+      <if test="billTypeId != null and billTypeId!='' ">
+          and  t2.id =#{billTypeId}
+      </if>
+      <if test="beginTime != null and beginTime!=''">
+        and  t1.billtime >=#{beginTime}
+      </if>
+      <if test="endTime != null and endTime!=''">
+        and    t1.billtime <![CDATA[<=]]>    #{endTime}
+      </if>
+    </where>
+
+
+  </select>
+
+  <!--在 XML 元素中，"<" 和 "&" 是非法的,用<![CDATA[  <  ]]> 来表示字符<,xml中单个<表示一个元素开始 -->
+  <select id="selectBillsList" parameterType="map" resultMap="HasNameResultMap" >
+    SELECT * from  bills
+    <where>
+
+      <if test="billTypeId != null and billTypeId!='' ">
+        and  typeid =#{billTypeId}
+      </if>
+      <if test="beginTime != null and beginTime!=''">
+        and  billtime >=#{beginTime}
+      </if>
+      <if test="endTime != null and endTime!=''">
+        and   billtime <![CDATA[<=]]>    #{endTime}
+      </if>
+    </where>
+
+
+  </select>
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <import resource="classpath:shiro-spring.xml"></import>
+
+    <!--service包扫描,创建service层的bean,扫描缓存-->
+    <context:component-scan base-package="com.lee.service"></context:component-scan>
+    <!--dao-->
+    <!--配置数据源-->
+    <!--引入配置文件-->
+    <context:property-placeholder location="classpath:db.properties"
+                                  system-properties-mode="FALLBACK"></context:property-placeholder>
+    <!--配置数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="${username}"></property>
+        <property name="password" value="${password}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="driverClassName" value="${driverClassName}"></property>
+    </bean>
+
+    <!--接管mybatis，创建sqlSessionFactory对象 ，-->
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"></property>
+
+
+        <property name="typeAliasesPackage" value="com.lee.domain"></property>
+        <property name="plugins">
+            <array>
+
+                <bean class="com.github.pagehelper.PageInterceptor"></bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--把创建的mapper接口的代理类注册到spring容器（主要是托管到spring容器）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--mapper接口放在哪里-->
+        <property name="basePackage" value="com.lee.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!--tx-->
+    <!--事务管理器bean-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--事务关键是要保护数据库中的的数据安全，配置数据源-->
+        <property name="dataSource"  ref="dataSource"></property>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager" >
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"></tx:method>
+            <tx:method name="query*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="delete*" propagation="REQUIRED"></tx:method>
+            <tx:method name="update*" propagation="REQUIRED"></tx:method>
+            <!--默认处理-->
+            <tx:method name="*"  read-only="true"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+    <!--配置切面-->
+    <aop:config >
+        <aop:pointcut id="txPointCut" expression="execution(* com.lee.service.*.*(..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"></aop:advisor>
+    </aop:config>
+    <!--扫描aspect类-->
+    <context:component-scan base-package="com.lee.ache"></context:component-scan>
+</beans>

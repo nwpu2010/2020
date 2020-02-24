@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html class="loginHtml">
+    <head>
+        <meta charset="utf-8">
+        <title>汽车租赁</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="icon" href="favicon.ico">
+        <link rel="stylesheet" href="resources/layui/css/layui.css" media="all"/>
+        <link rel="stylesheet" href="resources/css/public.css" media="all"/>
+    </head>
+    <body class="loginBody">
+        <form class="layui-form">
+            <div class="login_face"><img src="resources/images/face.jpg" class="userAvatar"></div>
+            <div class="layui-form-item input-item">
+                <label for="loginName">用户名</label>
+                <input type="text" placeholder="请输入用户名" autocomplete="off" id="loginName" name="loginName"
+                       style="padding-left: 80px" class="layui-input" lay-verify="required">
+            </div>
+            <div class="layui-form-item input-item">
+                <label for="password">密码</label>
+                <input type="password" placeholder="请输入密码" autocomplete="off" id="password" name="password"
+                       style="padding-left: 80px" class="layui-input" lay-verify="required">
+            </div>
+            <div class="layui-form-item input-item" id="imgCode">
+                <label for="checkCode">验证码</label>
+                <input type="text" style="padding-left: 80px" placeholder="请输入验证码" id="checkCode" name="checkCode"
+                       autocomplete="off" class="layui-input">
+                <img src="sys/checkCode/code.do" id="checkCodeImg">
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-block" lay-filter="submitBtnFilter" lay-submit>登录</button>
+            </div>
+        </form>
+        <script type="text/javascript" src="resources/layui/layui.js"></script>
+        <script>
+            layui.use(['jquery', 'form', 'layer'], function () {
+                let $ = layui.jquery;
+                let form = layui.form;
+                let layer = layui.layer;
+                //为验证码添加 更新事件
+                $("#checkCodeImg").click(function () {
+                    $(this).attr("src", "sys/checkCode/code.do?" + new Date())
+                });
+                //为form表单添加提交的监听事件
+                form.on("submit(submitBtnFilter)", function (d) {
+                    //获取表单中数据
+                    var data = d.field;
+                    $.post("sys/user/login.do", data, function (rs) {
+                        //校验业务码
+                        if (rs.code != 200) {
+                            layer.msg(rs.msg);
+                            return false;
+                        }
+                        //跳转到系统首页
+                        location.href = "page/main.do";
+                    })
+                    return false;//阻止表单提交
+                })
+            })
+        </script>
+    </body>
+</html>

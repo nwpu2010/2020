@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lee.sys.mapper.SysRoleMenuRelMapper">
+  <resultMap id="BaseResultMap" type="com.lee.sys.vo.SysRoleMenuRelVO">
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+  </resultMap>
+  <select id="selectList"  resultMap="BaseResultMap">
+        select  role_id,menu_id from sys_role_menu_rel
+        <where>
+          <if test="roleId != null and roleId !=''">
+              and role_id = #{roleId}
+          </if>
+        </where>
+  </select>
+    <!--根据角色删除权限-->
+    <delete id="deleteByRole">
+        delete from sys_role_menu_rel where role_id = #{roleId}
+
+    </delete>
+    <!--新增角色权限-->
+    <insert id="insertRoleMenu">
+        insert into sys_role_menu_rel (role_id,menu_id) values
+        <foreach collection="menuIds" item="menuId" separator="," >
+            (#{roleId},#{menuId})
+        </foreach>
+    </insert>
+
+</mapper>
