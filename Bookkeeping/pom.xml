@@ -31,7 +31,7 @@
         <shiro.version>1.5.0</shiro.version>
         <!--tools-->
         <pagehelper.version>5.1.10</pagehelper.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
         <fileupload.version>1.4</fileupload.version>
         <logging.version>1.2</logging.version>
         <log4j.version>1.2.17</log4j.version>
